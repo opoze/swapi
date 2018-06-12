@@ -20,7 +20,7 @@ class CreateUsersTable extends Migration
             $table->date('birth_date');
             $table->string('perfil');
             $table->string('email')->unique();
-            $table->string('password');
+            $table->string('password')->nullable();
             $table->timestamps();
         });
     }

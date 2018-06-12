@@ -18,25 +18,51 @@ class UserController extends Controller
     }
 
     public function store(StoreUserRequest $r) {
-      dd($r->all());
+      try{
+        $user = new User();
+        $user->name = $r->get('name');
+        $user->cpf = $r->get('cpf');
+        $user->birth_date = $r->get('birth_date');
+        $user->perfil = $r->get('perfil');
+        $user->email = $r->get('email');
+        $user->save();
+      }
+      catch(\Exception $e){
+        return response()->json(false, 422);
+      }
+      return response()->json(true, 200);
     }
 
-    public function update(Request $r) {
-      $user = User::find($id);
-      if(!is_null($user)){
-        $user->update();
-        return response()->json(true);
+    public function update($id, Request $r) {
+      try{
+        $user = User::find($id);
+        if(!is_null($user)){
+          $user->name = $r->get('name');
+          $user->cpf = $r->get('cpf');
+          $user->birth_date = $r->get('birth_date');
+          $user->perfil = $r->get('perfil');
+          $user->email = $r->get('email');
+          $user->save();
+        }
       }
-      return response()->json(false);
+      catch(\Exception $e){
+        return response()->json(false, 422);
+      }
+      return response()->json(true, 200);
     }
 
-    public function destroy() {
-      $user = User::find($id);
-      if(!is_null($user)){
-        $user->delete();
-        return response()->json(true);
+    public function destroy($id) {
+      try {
+        $user = User::find($id);
+        if(!is_null($user)){
+          $user->delete();
+          return response()->json(true);
+        }
+        return response()->json(false);
+      } catch (\Exception $e) {
+        return response()->json(false, 422);
       }
-      return response()->json(false);
+      return response()->json(true, 200);
     }
 
     // public function edit() {
