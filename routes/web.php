@@ -11,14 +11,23 @@
 |
 */
 
-Route::get('/', function () {
-    dd(DB::table('users')->get());
+// Route::get('/', function () {
+    //dd(DB::table('users')->get());
     //return view('welcome');
+// });
+
+// Route::resources([
+//   'user' => 'UserController'
+// ]);
+
+
+Route::middleware(['cors'])->group(function () {
+  Route::get('user', ['uses' => 'UserController@index']);
+  Route::match(['post', 'options'], 'user/{id}', ['uses' => 'UserController@update']);
 });
 
-Route::resources([
-  'user' => 'UserController'
-]);
+
+
 
 
 // GET	/photos	index	photos.index
