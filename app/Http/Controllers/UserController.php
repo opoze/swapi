@@ -5,13 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
+use App\Http\Requests\UpdateUserRequest;
 
 use \Response;
 
 class UserController extends Controller
 {
-
-
 
     public function index() {
       return Response::json(User::get(), 200);
@@ -32,16 +31,12 @@ class UserController extends Controller
         $user->save();
       }
       catch(\Exception $e){
-        return response()->json(false, 422);
+        return response()->json($e, 422);
       }
       return response()->json(true, 200);
     }
 
-    public function update($id, Request $r) {
-
-      dd($r->json());
-
-
+    public function update($id, UpdateUserRequest $r) {
       try{
         $user = User::find($id);
         if(!is_null($user)){
