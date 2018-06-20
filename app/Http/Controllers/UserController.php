@@ -69,7 +69,9 @@ class UserController extends Controller
     }
 
     public function search($term){
-      return response()->json(true, 200);
+      $users = User::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
+
+      return response()->json($users, 200);
     }
 
     // public function edit() {
