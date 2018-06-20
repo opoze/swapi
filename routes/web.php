@@ -24,6 +24,7 @@
 Route::middleware(['cors'])->group(function () {
   Route::get('user', ['uses' => 'UserController@index']);
   Route::post('user/{id}', ['uses' => 'UserController@update']);
+  Route::get('user/{term}', ['uses' => 'UserController@search']);
   Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });
 
