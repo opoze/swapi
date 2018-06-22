@@ -27,8 +27,7 @@ class StoreUserRequest extends FormRequest
             'name' => 'required',
             'cpf' => 'required',
             'birth_date' => 'required',
-            'perfil' => 'required',
-            'email' => 'required'
+            'perfil' => 'required'
         ];
     }
 }

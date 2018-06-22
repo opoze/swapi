@@ -14,11 +14,11 @@ class CreateSupliersTable extends Migration
     public function up()
     {
         Schema::create('supliers', function (Blueprint $table) {
-            $table->increments('id');
-            $table->string('name');
-            $table->string('email')->unique();
-            $table->string('fone');
-            $table->string('fiscal');
+          $table->increments('id');
+          $table->string('name');
+          $table->string('email')->unique();
+          $table->string('fone');
+          $table->string('fiscal');
         });
     }
 
@@ -29,6 +29,6 @@ class CreateSupliersTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('supliers');
+      Schema::dropIfExists('supliers');
     }
 }

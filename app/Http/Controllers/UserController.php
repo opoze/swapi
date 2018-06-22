@@ -27,7 +27,6 @@ class UserController extends Controller
         $user->cpf = $r->get('cpf');
         $user->birth_date = $r->get('birth_date');
         $user->perfil = $r->get('perfil');
-        $user->email = $r->get('email');
         $user->save();
       }
       catch(\Exception $e){
