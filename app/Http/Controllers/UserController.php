@@ -6,14 +6,14 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
-
+use Carbon\Carbon;
 use \Response;
 
 class UserController extends Controller
 {
 
     public function index() {
-      return Response::json(User::get(), 200);
+      return response()->json(User::get(), 200);
     }
 
     public function show($id) {
@@ -21,11 +21,19 @@ class UserController extends Controller
     }
 
     public function store(StoreUserRequest $r) {
+
       try{
+        // converte birth date
+        $date = Carbon::createFromFormat('d/m/Y', $r->get('birth_date'));
+        $date = $date->format('Y-m-d');
+
+        // converte cpf
+        $cpf = preg_replace('/\D/', '', $r->get('cpf'));
+
         $user = new User();
         $user->name = $r->get('name');
-        $user->cpf = $r->get('cpf');
-        $user->birth_date = $r->get('birth_date');
+        $user->cpf = $cpf;
+        $user->birth_date = $date;
         $user->perfil = $r->get('perfil');
         $user->save();
       }
@@ -37,11 +45,20 @@ class UserController extends Controller
 
     public function update($id, UpdateUserRequest $r) {
       try{
+
+        //converte birth date
+        $date = Carbon::createFromFormat('d/m/Y', $r->get('birth_date'));
+        $date = $date->format('Y-m-d');
+        // converte cpf
+        $cpf = preg_replace('/\D/', '', $r->get('cpf'));
+
+        // dd($date);
+
         $user = User::find($id);
         if(!is_null($user)){
           $user->name = $r->get('name');
-          $user->cpf = $r->get('cpf');
-          $user->birth_date = $r->get('birth_date');
+          $user->cpf = $cpf;
+          $user->birth_date = $date;
           $user->perfil = $r->get('perfil');
           $user->email = $r->get('email');
           $user->save();
@@ -69,13 +86,7 @@ class UserController extends Controller
 
     public function search($term){
       $users = User::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
-
       return response()->json($users, 200);
     }
 
-    // public function edit() {
-    // }
-    //
-    // public function create() {
-    // }
 }

@@ -28,6 +28,13 @@ Route::middleware(['cors'])->group(function () {
   Route::get('user/{id}', ['uses' => 'UserController@show']);
   Route::get('userfind/{term}', ['uses' => 'UserController@search']);
   Route::options('/{any}', function(){ return ''; })->where('any', '.*');
+
+  Route::get('category', ['uses' => 'CategoryController@index']);
+  Route::post('category/{id}', ['uses' => 'CategoryController@update']);
+  Route::post('category', ['uses' => 'CategoryController@store']);
+  Route::get('category/{id}', ['uses' => 'CategoryController@show']);
+  Route::get('categoryfind/{term}', ['uses' => 'CategoryController@search']);
+  Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });
 
 
