@@ -4,13 +4,31 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Proposal;
+use App\Config;
 use App\Http\Requests\StoreProposalRequest;
-use App\Http\Requests\UpdateProposalrRequest;
+use App\Http\Requests\UpdateProposalRequest;
+use App\Http\Requests\UpdateProposalTimeRequest;
 use Carbon\Carbon;
 use \Response;
 
 class ProposalController extends Controller
 {
+
+    public function getProposalTime() {
+      return Config::find(1);
+    }
+
+    public function updateProposalTime(UpdateProposalTimeRequest $r) {
+      try{
+        $config = Config::find(1);
+        $config->proposaltime = $r->get('proposaltime');
+        $config->save();
+      }
+      catch(\Exception $e){
+        return response()->json($e, 422);
+      }
+      return response()->json(true, 200);
+    }
 
     public function index($id) {
       $proposals = Proposal::with('category', 'suplier', 'statuses')
@@ -51,25 +69,25 @@ class ProposalController extends Controller
       return response()->json($ps, 200);
 
     }
-    //
-    // public function store(StoreProposalRequest $r) {
-    //   try{
-    //     $date = Carbon::now();
-    //     $date = $date->format('Y-m-d H:i:s');
-    //     $proposal = new Proposal();
-    //     $proposal->name = $r->get('name');
-    //     $proposal->category = $r->get('category');
-    //     $proposal->suplier = $r-.get('suplier');
-    //     $proposal->value = $r->get('value');
-    //     $proposal->status = null;
-    //     $proposal->file = null;
-    //     $proposal->save();
-    //   }
-    //   catch(\Exception $e){
-    //     return response()->json($e, 422);
-    //   }
-    //   return response()->json(true, 200);
-    // }
+    
+    public function store(StoreProposalRequest $r) {
+      try{
+        $date = Carbon::now();
+        $date = $date->format('Y-m-d H:i:s');
+        $proposal = new Proposal();
+        $proposal->name = $r->get('name');
+        $proposal->category = $r->get('category');
+        $proposal->suplier = $r->get('suplier');
+        $proposal->value = $r->get('value');
+        $proposal->status = null;
+        $proposal->file = null;
+        $proposal->save();
+      }
+      catch(\Exception $e){
+        return response()->json($e, 422);
+      }
+      return response()->json(true, 200);
+    }
     //
     // public function update($id, UpdateProposalRequest $r) {
     //   try{

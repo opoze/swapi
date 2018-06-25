@@ -43,11 +43,15 @@ Route::middleware(['cors'])->group(function () {
   Route::get('proposals/{id}', ['uses' => 'ProposalController@index']);
   Route::get('proposal', ['uses' => 'ProposalController@index']);
   // Route::post('proposal/{id}', ['uses' => 'ProposalController@update']);
-  // Route::post('proposal', ['uses' => 'ProposalController@store']);
+  Route::post('proposal', ['uses' => 'ProposalController@store']);
   Route::get('proposal/{id}', ['uses' => 'ProposalController@show']);
   // Route::get('proposalfind/{term}', ['uses' => 'ProposalController@search']);
 
 
+  //ProposalTime
+  Route::get('proposaltime', ['uses' => 'ProposalController@getProposalTime']);
+  Route::post('proposaltime', ['uses' => 'ProposalController@updateProposalTime']);
+  
   Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });
 
