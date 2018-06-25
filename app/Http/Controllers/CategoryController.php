@@ -34,7 +34,7 @@ class categoryController extends Controller
 
     public function update($id, UpdateCategoryRequest $r) {
       try{
-        $category = User::find($id);
+        $category = Category::find($id);
         if(!is_null($category)){
           $category->name = $r->get('name');
           $category->description = $r->get('description');
