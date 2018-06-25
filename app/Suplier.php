@@ -6,16 +6,19 @@ use Illuminate\Database\Eloquent\Model;
 
 class Suplier extends Model
 {
+
+  public $timestamps = false;
+
   /**
    * The attributes that are mass assignable.
    *
    * @var array
    */
   protected $fillable = [
-      'name', 'email', 'fone', 'fiscal'
+      'name', 'email', 'fone', 'cpf', 'cnpj'
   ];
 
-  public function proposals()
-		return $this->hasMany('App\Proposal');
-	}
+  // public function proposals()
+	// 	return $this->hasMany('App\Proposal');
+	// }
 }

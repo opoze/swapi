@@ -1,0 +1,115 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use App\Proposal;
+use App\Http\Requests\StoreProposalRequest;
+use App\Http\Requests\UpdateProposalrRequest;
+use Carbon\Carbon;
+use \Response;
+
+class ProposalController extends Controller
+{
+
+    public function index($id) {
+      $proposals = Proposal::with('category', 'suplier', 'statuses')
+      ->where('suplier', '=', $id)
+      ->get();
+
+      $ps=[];
+      foreach ($proposals as $key => $proposal) {
+        if(count($proposal->statuses) > 0){
+          $proposal->status = $proposal->statuses[0];
+        }
+        else{
+          $proposal->status = null;
+        }
+        unset($proposal->statuses);
+        $ps[] = $proposal;
+      }
+
+      return response()->json($ps, 200);
+    }
+
+    public function show($id) {
+      $proposal = Proposal::with('category', 'suplier', 'statuses')
+      ->find($id);
+
+      $ps = null;
+      if(!is_null($proposal)){
+        if(count($proposal->statuses) > 0){
+          $proposal->status = $proposal->statuses[0];
+        }
+        else{
+          $proposal->status = null;
+        }
+        unset($proposal->statuses);
+        $ps = $proposal;
+      }
+
+      return response()->json($ps, 200);
+
+    }
+    //
+    // public function store(StoreProposalRequest $r) {
+    //   try{
+    //     $date = Carbon::now();
+    //     $date = $date->format('Y-m-d H:i:s');
+    //     $proposal = new Proposal();
+    //     $proposal->name = $r->get('name');
+    //     $proposal->category = $r->get('category');
+    //     $proposal->suplier = $r-.get('suplier');
+    //     $proposal->value = $r->get('value');
+    //     $proposal->status = null;
+    //     $proposal->file = null;
+    //     $proposal->save();
+    //   }
+    //   catch(\Exception $e){
+    //     return response()->json($e, 422);
+    //   }
+    //   return response()->json(true, 200);
+    // }
+    //
+    // public function update($id, UpdateProposalRequest $r) {
+    //   try{
+    //     $date = Carbon::createFromFormat('d/m/Y', $r->get('birth_date'));
+    //     $date = $date->format('Y-m-d H:i:s');
+    //     $proposal = Proposal::find($id);
+    //     if(!is_null($user)){
+    //       $proposal->name = $r->get('name');
+    //       $proposal->category = $r->get('category');
+    //       $proposal->suplier = $r-.get('suplier');
+    //       $proposal->value = $r->get('value');
+    //       $proposal->status = null;
+    //       $proposal->file = null;
+    //       $proposal->save();
+    //
+    //     }
+    //   }
+    //   catch(\Exception $e){
+    //     return Response::json($e, 422);
+    //   }
+    //   return Response::json(true, 200);
+    // }
+    //
+    // public function destroy($id) {
+    //   try {
+    //     $proposal = Proposal::find($id);
+    //     if(!is_null($proposal)){
+    //       $proposal->delete();
+    //       return response()->json(true);
+    //     }
+    //     return response()->json(false);
+    //   } catch (\Exception $e) {
+    //     return response()->json(false, 422);
+    //   }
+    //   return response()->json(true, 200);
+    // }
+    //
+    // public function search($term){
+    //   $proposals = Proposal::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
+    //   return response()->json($proposals, 200);
+    // }
+
+}

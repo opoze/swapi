@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateSupliersTable extends Migration
+class CreateProposalStatusTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateSupliersTable extends Migration
      */
     public function up()
     {
-        Schema::create('supliers', function (Blueprint $table) {
+      Schema::create('proposal_status', function (Blueprint $table) {
           $table->increments('id');
-          $table->string('name');
-          $table->string('email')->unique();
-          $table->string('fone');
-          $table->string('cpf')->nullable()->unique();
-          $table->string('cnpj')->nullable()->unique();
-        });
+          $table->string('status');
+          $table->integer('user')->unsigned()->index();
+          $table->integer('proposal')->unsigned()->index();
+          $table->timestamps();
+      });
     }
 
     /**
@@ -30,6 +29,6 @@ class CreateSupliersTable extends Migration
      */
     public function down()
     {
-      Schema::dropIfExists('supliers');
+      Schema::dropIfExists('proposal_status');
     }
 }

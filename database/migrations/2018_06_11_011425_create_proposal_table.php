@@ -13,12 +13,13 @@ class CreateProposalTable extends Migration
      */
     public function up()
     {
-        Schema::create('proposal', function (Blueprint $table) {
+        Schema::create('proposals', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
             $table->integer('category')->unsigned()->index();
             $table->integer('suplier')->unsigned()->index();
             $table->double('value');
+            $table->string('file')->nullable();
             $table->text('description');
             $table->timestamps();
         });
@@ -31,6 +32,6 @@ class CreateProposalTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('proposal');
+        Schema::dropIfExists('proposals');
     }
 }

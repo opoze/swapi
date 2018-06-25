@@ -27,13 +27,27 @@ Route::middleware(['cors'])->group(function () {
   Route::post('user', ['uses' => 'UserController@store']);
   Route::get('user/{id}', ['uses' => 'UserController@show']);
   Route::get('userfind/{term}', ['uses' => 'UserController@search']);
-  Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 
   Route::get('category', ['uses' => 'CategoryController@index']);
   Route::post('category/{id}', ['uses' => 'CategoryController@update']);
   Route::post('category', ['uses' => 'CategoryController@store']);
   Route::get('category/{id}', ['uses' => 'CategoryController@show']);
   Route::get('categoryfind/{term}', ['uses' => 'CategoryController@search']);
+
+  Route::get('suplier', ['uses' => 'SuplierController@index']);
+  Route::post('suplier/{id}', ['uses' => 'SuplierController@update']);
+  Route::post('suplier', ['uses' => 'SuplierController@store']);
+  Route::get('suplier/{id}', ['uses' => 'SuplierController@show']);
+  Route::get('suplierfind/{term}', ['uses' => 'SuplierController@search']);
+
+  Route::get('proposals/{id}', ['uses' => 'ProposalController@index']);
+  Route::get('proposal', ['uses' => 'ProposalController@index']);
+  // Route::post('proposal/{id}', ['uses' => 'ProposalController@update']);
+  // Route::post('proposal', ['uses' => 'ProposalController@store']);
+  Route::get('proposal/{id}', ['uses' => 'ProposalController@show']);
+  // Route::get('proposalfind/{term}', ['uses' => 'ProposalController@search']);
+
+
   Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });
 

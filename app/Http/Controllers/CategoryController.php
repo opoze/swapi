@@ -7,7 +7,7 @@ use App\Http\Requests\StoreCategoryRequest;
 use App\Http\Requests\UpdateCategoryRequest;
 use \Response;
 
-class categoryController extends Controller
+class CategoryController extends Controller
 {
 
     public function index() {
