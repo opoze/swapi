@@ -23,16 +23,16 @@ class UsersTableSeeder extends Seeder
       ]);
       DB::table('users')->insert([
         'name' => 'Luis',
-        'email' => 'admin1@gmail.com',
-        'password' => bcrypt('admin'),
+        'email' => 'luis@gmail.com',
+        'password' => bcrypt('luis'),
         'birth_date' => Carbon::now()->format('Y-m-d'),
         'cpf' => '74957335292',
         'perfil' => '2'
       ]);
       DB::table('users')->insert([
         'name' => 'Alberto',
-        'email' => 'admin2@gmail.com',
-        'password' => bcrypt('admin'),
+        'email' => 'alberto@gmail.com',
+        'password' => bcrypt('alberto'),
         'birth_date' => Carbon::now()->format('Y-m-d'),
         'cpf' => '74957315292',
         'perfil' => '3'

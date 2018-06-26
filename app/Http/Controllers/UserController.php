@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use App\Http\Requests\StoreUserRequest;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\LoginRequest;
 use Carbon\Carbon;
 use \Response;
 
@@ -87,6 +88,33 @@ class UserController extends Controller
     public function search($term){
       $users = User::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
       return response()->json($users, 200);
+    }
+
+
+    public function authenticate(LoginRequest $r){
+      try{
+        $user = User::where('email', $r->get('email'))->first();
+        if(!is_null($user)){
+          //Hash on liber é MD5
+          if(\Hash::check($r->get('password'), $user->password)){
+            $apikey = base64_encode(str_random(40));
+            $user->update(['token' => $apikey]);
+            return response()->json([
+              'token' => 'Bearer ' . $apikey,
+              'nome' => $user->name
+            ], 200);
+          }
+        }
+        return response()->json( ['token' => null], 401 );
+      }
+      catch(\Exception $e){
+        var_dump($e);
+        return response()->json( ['token' => null], 422 );
+      }
+    }
+
+    public function logout(){
+      
     }
 
 }

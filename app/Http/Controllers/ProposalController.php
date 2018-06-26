@@ -26,7 +26,27 @@ class ProposalController extends Controller
       } catch (\Exception $e) {
         return response()->json($e, 422);
       }
+    }
 
+    public function downloadFile($id, Request $r){
+      try {
+        $proposal = Proposal::find($id);
+        if(\Storage::exists('proposal_'.$id.'.pdf')){
+          return response()->file(
+            storage_path('/app/proposal_'.$id.'.pdf'),
+            [
+              'Access-Control-Allow-Origin' =>  '*',
+              'Access-Control-Allow-Methods' => 'GET, POST, PUT, DELETE, OPTIONS',
+              'Access-Control-Allow-Credentials' => 'true',
+              'Access-Control-Max-Age' => '10000',
+              'Access-Control-Allow-Headers' => 'Origin, X-Request-Width, Content-Type, Accept, Authorization'
+            ]
+          );
+        }
+        throw new \Exception("File Not Found", 1);
+      } catch (\Exception $e) {
+        return response()->json($e, 422);
+      }
     }
 
     public function getProposalTime() {
