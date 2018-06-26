@@ -51,16 +51,8 @@ Route::middleware(['cors'])->group(function () {
   //ProposalTime
   Route::get('proposaltime', ['uses' => 'ProposalController@getProposalTime']);
   Route::post('proposaltime', ['uses' => 'ProposalController@updateProposalTime']);
-  
+  Route::get('proposalstatushistory/{id}', ['uses' => 'ProposalController@getProposalStatusHistory']);
+  Route::post('proposalstatushistory/{id}', ['uses' => 'ProposalController@updateProposalStatusHistory']);
+
   Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });
-
-
-
-// GET	/photos	index	photos.index
-// GET	/photos/create	create	photos.create
-// POST	/photos	store	photos.store
-// GET	/photos/{photo}	show	photos.show
-// GET	/photos/{photo}/edit	edit	photos.edit
-// PUT/PATCH	/photos/{photo}	update	photos.update
-// DELETE	/photos/{photo}	destroy	photos.destroy

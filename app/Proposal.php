@@ -27,7 +27,7 @@ class Proposal extends Model
   }
 
   public function statuses(){
-    return $this->hasMany('App\ProposalStatus', 'proposal')->orderBy('created_at');
+    return $this->hasMany('App\ProposalStatus', 'proposal')->orderBy('created_at', 'desc');
   }
 
 
