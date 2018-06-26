@@ -15,6 +15,20 @@ use \Response;
 class ProposalController extends Controller
 {
 
+    public function uploadFile($id, Request $r){
+      try {
+        $proposal = Proposal::find($id);
+        $file = $r->file('file');
+        $file->storeAs('/', 'proposal_'.$id.'.pdf');
+        $proposal->file = $file->getClientOriginalName();
+        $proposal->save();
+        return response()->json(true, 200);
+      } catch (\Exception $e) {
+        return response()->json($e, 422);
+      }
+
+    }
+
     public function getProposalTime() {
       return Config::find(1);
     }
@@ -142,27 +156,23 @@ class ProposalController extends Controller
       return response()->json($proposal->statuses, 200);
     }
 
-    // public function update($id, UpdateProposalRequest $r) {
-    //   try{
-    //     $date = Carbon::createFromFormat('d/m/Y', $r->get('birth_date'));
-    //     $date = $date->format('Y-m-d H:i:s');
-    //     $proposal = Proposal::find($id);
-    //     if(!is_null($user)){
-    //       $proposal->name = $r->get('name');
-    //       $proposal->category = $r->get('category');
-    //       $proposal->suplier = $r-.get('suplier');
-    //       $proposal->value = $r->get('value');
-    //       $proposal->status = null;
-    //       $proposal->file = null;
-    //       $proposal->save();
-    //
-    //     }
-    //   }
-    //   catch(\Exception $e){
-    //     return Response::json($e, 422);
-    //   }
-    //   return Response::json(true, 200);
-    // }
+    public function update($id, UpdateProposalRequest $r) {
+      try{
+        $proposal = Proposal::find($id);
+        if(!is_null($proposal)){
+          $proposal->name = $r->get('name');
+          $proposal->category = $r->get('category');
+          $proposal->suplier = $r->get('suplier');
+          $proposal->value = $r->get('value');
+          $proposal->description = $r->get('description');
+          $proposal->save();
+        }
+      }
+      catch(\Exception $e){
+        return response()->json($e, 422);
+      }
+      return response()->json(true, 200);
+    }
     //
     // public function destroy($id) {
     //   try {

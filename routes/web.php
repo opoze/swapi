@@ -42,7 +42,7 @@ Route::middleware(['cors'])->group(function () {
 
   Route::get('proposals/{id}', ['uses' => 'ProposalController@index']);
   Route::get('proposal', ['uses' => 'ProposalController@index']);
-  // Route::post('proposal/{id}', ['uses' => 'ProposalController@update']);
+  Route::post('proposal/{id}', ['uses' => 'ProposalController@update']);
   Route::post('proposal', ['uses' => 'ProposalController@store']);
   Route::get('proposal/{id}', ['uses' => 'ProposalController@show']);
   // Route::get('proposalfind/{term}', ['uses' => 'ProposalController@search']);
@@ -53,6 +53,7 @@ Route::middleware(['cors'])->group(function () {
   Route::post('proposaltime', ['uses' => 'ProposalController@updateProposalTime']);
   Route::get('proposalstatushistory/{id}', ['uses' => 'ProposalController@getProposalStatusHistory']);
   Route::post('proposalstatushistory/{id}', ['uses' => 'ProposalController@updateProposalStatusHistory']);
+  Route::post('proposaluploadfile/{id}', ['uses' => 'ProposalController@uploadFile']);
 
   Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });

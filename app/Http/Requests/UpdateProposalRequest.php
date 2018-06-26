@@ -27,7 +27,8 @@ class UpdateProposalRequest extends FormRequest
             'name' => 'required',
             'description' => 'required',
             'category' => 'required',
-            'supplier' => 'required'
+            'suplier' => 'required',
+            'value' => 'required'
         ];
     }
 }
