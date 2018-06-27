@@ -3,6 +3,7 @@
 namespace App\Http\Middleware;
 
 use Closure;
+use App\User;
 use Illuminate\Contracts\Auth\Factory as Auth;
 
 class Authenticate
@@ -35,10 +36,21 @@ class Authenticate
      */
     public function handle($request, Closure $next, $guard = null)
     {
-        if ($this->auth->guard($guard)->guest()) {
-            return response('Não autorizado.', 401);
-        }
+      if ($request->header('Authorization')) {
 
-        return $next($request);
+          $key = explode(' ',$request->header('Authorization'));
+
+          if(isset($key[1])){
+              $user = User::where('token', $key[1])->first();
+              if(!empty($user)){
+                  $request->request->add([
+                      'userId' => $user->id,
+                      'userPerfil' => $user->perfil
+                  ]);
+                  return $next($request);
+              }
+          }
+      }
+      return response('Não autorizado.', 401);
     }
 }

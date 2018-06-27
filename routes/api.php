@@ -45,14 +45,17 @@ Route::middleware(['cors', 'auth'])->group(function () {
   Route::post('proposaltime', ['uses' => 'ProposalController@updateProposalTime']);
   Route::get('proposalstatushistory/{id}', ['uses' => 'ProposalController@getProposalStatusHistory']);
   Route::post('proposalstatushistory/{id}', ['uses' => 'ProposalController@updateProposalStatusHistory']);
-  Route::post('proposaluploadfile/{id}', ['uses' => 'ProposalController@uploadFile']);
 
-  // Options
-  Route::options('/{any}', function(){ return ''; })->where('any', '.*');
 });
 
+// Options
 //Login
-Route::post('login', ['uses' => 'UserController@authenticate']);
+Route::middleware(['cors'])->group(function () {
+  Route::options('/{any}', function(){ return ''; })->where('any', '.*');
+  Route::post('login', ['uses' => 'UserController@authenticate']);
+  Route::post('proposaluploadfile/{id}', ['uses' => 'ProposalController@uploadFile']);
+});
 
+//File upload
 // File Download
 Route::get('proposaldownloadfile/{id}', ['uses' => 'ProposalController@downloadFile']);

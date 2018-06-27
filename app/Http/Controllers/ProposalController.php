@@ -11,6 +11,7 @@ use App\Http\Requests\UpdateProposalTimeRequest;
 use App\Http\Requests\UpdateProposalStatusRequest;
 use Carbon\Carbon;
 use \Response;
+use Exception;
 
 class ProposalController extends Controller
 {
@@ -18,14 +19,18 @@ class ProposalController extends Controller
     public function uploadFile($id, Request $r){
       try {
         $proposal = Proposal::find($id);
-        $file = $r->file('file');
-        $file->storeAs('/', 'proposal_'.$id.'.pdf');
-        $proposal->file = $file->getClientOriginalName();
-        $proposal->save();
-        return response()->json(true, 200);
-      } catch (\Exception $e) {
+        if(!is_null($r->file('file'))){
+          $file = $r->file('file');
+          $file->storeAs('/', 'proposal_'.$id.'.pdf');
+          $proposal->file = $file->getClientOriginalName();
+          $proposal->save();
+          return response()->json(true, 200);
+        }
+      }
+      catch (Exception $e) {
         return response()->json($e, 422);
       }
+      return response()->json(false, 404);
     }
 
     public function downloadFile($id, Request $r){

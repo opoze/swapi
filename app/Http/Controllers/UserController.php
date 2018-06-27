@@ -93,7 +93,7 @@ class UserController extends Controller
 
     public function authenticate(LoginRequest $r){
       try{
-        $user = User::where('email', $r->get('email'))->first();
+        $user = User::where('email', $r->get('login'))->first();
         if(!is_null($user)){
           //Hash on liber é MD5
           if(\Hash::check($r->get('password'), $user->password)){
@@ -101,20 +101,19 @@ class UserController extends Controller
             $user->update(['token' => $apikey]);
             return response()->json([
               'token' => 'Bearer ' . $apikey,
-              'nome' => $user->name
+              'name' => $user->name
             ], 200);
           }
         }
         return response()->json( ['token' => null], 401 );
       }
       catch(\Exception $e){
-        var_dump($e);
         return response()->json( ['token' => null], 422 );
       }
     }
 
     public function logout(){
-      
+
     }
 
 }
