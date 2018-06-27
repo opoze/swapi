@@ -21,21 +21,21 @@ class UsersTableSeeder extends Seeder
         'cpf' => '74957335192',
         'perfil' => '1'
       ]);
-      DB::table('users')->insert([
-        'name' => 'Luis',
-        'email' => 'luis@gmail.com',
-        'password' => bcrypt('luis'),
-        'birth_date' => Carbon::now()->format('Y-m-d'),
-        'cpf' => '74957335292',
-        'perfil' => '2'
-      ]);
-      DB::table('users')->insert([
-        'name' => 'Alberto',
-        'email' => 'alberto@gmail.com',
-        'password' => bcrypt('alberto'),
-        'birth_date' => Carbon::now()->format('Y-m-d'),
-        'cpf' => '74957315292',
-        'perfil' => '3'
-      ]);
-    }
+    //   DB::table('users')->insert([
+    //     'name' => 'Luis',
+    //     'email' => 'luis@gmail.com',
+    //     'password' => bcrypt('luis'),
+    //     'birth_date' => Carbon::now()->format('Y-m-d'),
+    //     'cpf' => '74957335292',
+    //     'perfil' => '2'
+    //   ]);
+    //   DB::table('users')->insert([
+    //     'name' => 'Alberto',
+    //     'email' => 'alberto@gmail.com',
+    //     'password' => bcrypt('alberto'),
+    //     'birth_date' => Carbon::now()->format('Y-m-d'),
+    //     'cpf' => '74957315292',
+    //     'perfil' => '3'
+    //   ]);
+    // }
 }
