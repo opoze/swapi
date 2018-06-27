@@ -198,24 +198,31 @@ class ProposalController extends Controller
       }
       return response()->json(true, 200);
     }
-    //
-    // public function destroy($id) {
-    //   try {
-    //     $proposal = Proposal::find($id);
-    //     if(!is_null($proposal)){
-    //       $proposal->delete();
-    //       return response()->json(true);
-    //     }
-    //     return response()->json(false);
-    //   } catch (\Exception $e) {
-    //     return response()->json(false, 422);
-    //   }
-    //   return response()->json(true, 200);
-    // }
-    //
-    // public function search($term){
-    //   $proposals = Proposal::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
-    //   return response()->json($proposals, 200);
-    // }
+
+    public function destroy($id) {
+      try {
+        $proposal = Proposal::find($id);
+        if(!is_null($proposal)){
+          $proposal->delete();
+          return response()->json(true);
+        }
+        return response()->json(false);
+      } catch (\Exception $e) {
+        return response()->json(false, 422);
+      }
+      return response()->json(true, 200);
+    }
+
+    public function search($term){
+      // $proposals = \DB::table('proposals')
+      // ->join('supliers', 'supliers.id', '=', 'proposals.suplier')
+      // ->join('status', 'supliers.id', '=', 'proposals.suplier')
+      // ->where('proposals.name', 'ILIKE', '%' . strtolower($term) . '%')
+      // ->orWhere('supliers.name', 'ILIKE', '%' . strtolower($term) . '%')
+      // ->get();
+
+      $proposals = Proposal::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
+      return response()->json($proposals, 200);
+    }
 
 }

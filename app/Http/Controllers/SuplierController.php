@@ -70,10 +70,15 @@ class SuplierController extends Controller
       return Response::json(true, 200);
     }
 
+    public function search($term){
+      $categories = Suplier::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
+      return response()->json($categories, 200);
+    }
+
     public function destroy($id) {
       try {
         $suplier = Suplier::find($id);
-        if(!is_null(suplier)){
+        if(!is_null($suplier)){
           $suplier->delete();
           return response()->json(true);
         }
@@ -82,11 +87,6 @@ class SuplierController extends Controller
         return response()->json(false, 422);
       }
       return response()->json(true, 200);
-    }
-
-    public function search($term){
-      $categories = Suplier::where('name', 'ILIKE', '%' . strtolower($term) . '%')->get();
-      return response()->json($categories, 200);
     }
 
 }

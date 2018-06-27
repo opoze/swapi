@@ -28,6 +28,8 @@ class UpdateUserRequest extends FormRequest
             'cpf' => 'required',
             'birth_date' => 'required',
             'perfil' => 'required',
+            'email' => 'required',
+            'password' => 'required',
             'email' => 'required'
         ];
     }
